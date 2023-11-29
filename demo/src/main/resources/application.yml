@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    azure:
+      active-directory:
+        enabled: true
+        credential:
+          client-id: 3b107724-46f1-4b93-819a-9318ae1ddf5f
+        app-id-uri: api://3b107724-46f1-4b93-819a-9318ae1ddf5f
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://sts.windows.net/b9912f5e-1348-4b8d-a638-01bd28d62837/
