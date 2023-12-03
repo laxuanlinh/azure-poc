@@ -17,6 +17,7 @@ public class TestController {
         return map;
     }
 
+    @PreAuthorize("hasRole('ROLE_DATAENGINEER')")
     @GetMapping("/authTest")
     public Map<String, String> authTest(){
         Map<String, String> map = new HashMap<>();
