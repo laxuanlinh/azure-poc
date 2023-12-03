@@ -1,6 +1,7 @@
 package com.example.demo.config;
 
 import com.azure.spring.cloud.autoconfigure.implementation.aad.security.AadResourceServerHttpSecurityConfigurer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private CustomAuthorizationFilter customAuthorizationFilter;
     /**
      * Add configuration logic as needed.
      */
@@ -28,7 +31,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/test").permitAll()
                 .anyRequest().authenticated()
-                .and().addFilterAfter(new CustomAuthorizationFilter(), AuthorizationFilter.class);
+                .and().addFilterAfter(customAuthorizationFilter, AuthorizationFilter.class);
         return http.build();
     }
 

@@ -45,7 +45,8 @@ public class CustomAuthorizationFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) req;
         Jwt jwt;
         try {
-            jwt = NimbusJwtDecoder.withJwkSetUri("https://login.microsoftonline.com/common/discovery/v2.0/keys").build().decode(httpRequest.getHeader("Authorization").replace("Bearer ", ""));
+            jwt = nimbusJwtDecoder.decode(httpRequest.getHeader("Authorization").replace("Bearer ", ""));
+            jwt.getClaims().get("oid");
         } catch (JwtValidationException ex) {
             throw new RuntimeException("Wrong JWT format");
         }
