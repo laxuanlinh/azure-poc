@@ -28,8 +28,8 @@ export default function Login() {
         <div>
             {
                 isAuthenticated ? 
-                <button onClick={() => instance.logoutPopup()}>Logout</button> 
-                : <button onClick={() => instance.loginPopup({...loginRequest})}>Login</button>
+                <button onClick={() => instance.logoutRedirect()}>Logout</button> 
+                : <button onClick={() => instance.loginRedirect({...loginRequest})}>Login</button>
             }
             {
                 isAuthenticated && account ? <p>{account.name}</p> : <p></p>
