@@ -38,8 +38,20 @@ export const Config = {
 };
 
 export const protectedResources = {
-    testApi: {
-        endpoint: "http://localhost:8080/authTest",
+    pageContent: {
+        endpoint: "http://localhost:8080/api/page-content",
+        scopes: {}
+    },
+    codeTable: {
+        endpoint: "http://localhost:8080/api/code-table",
+        scopes: {}
+    },
+    routing: {
+        endpoint: "http://localhost:8080/api/routing",
+        scopes: {}
+    },
+    processData: {
+        endpoint: "http://localhost:8080/api/process",
         scopes: {}
     }
 }

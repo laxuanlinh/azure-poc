@@ -8,7 +8,7 @@ export default function Login() {
     const { instance, accounts, inProgress } = useMsal();
     const account = instance.getActiveAccount();
     const [value, setValue] = useState("");
-    const getTest = async () => {
+    const getTest = async (endpoint) => {
         const silentRequest = {
             scopes: [Config.auth.clientId+"/.default"],
             account: account
@@ -16,13 +16,13 @@ export default function Login() {
         const token: AuthenticationResult = await instance.acquireTokenSilent(
             silentRequest
         );
-        fetch(protectedResources.testApi.endpoint, {
+        fetch(endpoint, {
             headers: {
                 "Authorization": "Bearer "+token.accessToken
             }
         })
         .then(res => res.json())
-        .then(res => setValue(res.key));
+        .then(res => {setValue(res.key)}, error => {setValue("You're not allowed to fetch from "+endpoint)});
     }
     return (
         <div>
@@ -35,9 +35,17 @@ export default function Login() {
                 isAuthenticated && account ? <p>{account.name}</p> : <p></p>
             }
             {
-                isAuthenticated ? <button onClick={getTest}>Fetch</button> : ""
+                isAuthenticated ? 
+                <div>
+                    <button onClick={() => getTest(protectedResources.pageContent.endpoint)}>Page content</button>
+                    <button onClick={() => getTest(protectedResources.codeTable.endpoint)}>Code table</button>
+                    <button onClick={() => getTest(protectedResources.routing.endpoint)}>Routing</button>
+                    <button onClick={() => getTest(protectedResources.processData.endpoint)}>Process request</button>
+                </div> : ""
             }
-            <p>{value}</p>
+            {
+                isAuthenticated ? <p>{value}</p> : ""
+            }
         </div>
     )
 }

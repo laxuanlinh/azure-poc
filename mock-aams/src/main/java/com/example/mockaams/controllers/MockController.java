@@ -24,14 +24,33 @@ public class MockController {
         accessResponse.setHttpCode("200");
         accessResponse.setHttpMessage("Ok");
         accessResponse.setAccessDetails(new ArrayList<>());
-        for (String id : accessRequest.getFunction()){
-            AccessDetails details = new AccessDetails();
-            details.setFunctionId(id);
-            details.setHasAccess(true);
-            details.setGlobal(false);
-            details.setAccessScopes(List.of("ALL"));
-            accessResponse.getAccessDetails().add(details);
+//        for (String id : accessRequest.getFunction()){
+//            AccessDetails details = new AccessDetails();
+//            details.setFunctionId(id);
+//            details.setHasAccess(true);
+//            details.setGlobal(false);
+//            details.setAccessScopes(List.of("ALL"));
+//            accessResponse.getAccessDetails().add(details);
+//        }
+
+        if ("39fade9f-af0b-49fa-828f-fef17fcfc9dc".equals(accessRequest.getUserId())){
+            List.of("SY68000101", "SY68000201").stream().forEach(id -> {
+                AccessDetails details = new AccessDetails();
+                details.setFunctionId(id);
+                details.setHasAccess(true);
+                details.setGlobal(false);
+                accessResponse.getAccessDetails().add(details);
+            });
+        } else if ("e8862a37-0e85-4c45-8d21-9281e4abeba0".equals(accessRequest.getUserId())){
+            List.of("SY68000202").stream().forEach(id -> {
+                AccessDetails details = new AccessDetails();
+                details.setFunctionId(id);
+                details.setHasAccess(true);
+                details.setGlobal(false);
+                accessResponse.getAccessDetails().add(details);
+            });
         }
+
         return new ResponseEntity<>(accessResponse, HttpStatus.OK);
     }
 
